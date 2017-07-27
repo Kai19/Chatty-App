@@ -32,7 +32,6 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message){
     let messageRecieved = JSON.parse(message);
     console.log('recieved: ', messageRecieved.username + " said " + messageRecieved.content);
-    messageRecieved.id = uuidv4();
     broadcast(JSON.stringify(messageRecieved));
   });
 
