@@ -31,8 +31,17 @@ wss.on('connection', (ws) => {
 
   ws.on('message', function incoming(message){
     let messageRecieved = JSON.parse(message);
-    console.log('recieved: ', messageRecieved.username + " said " + messageRecieved.content);
-    broadcast(JSON.stringify(messageRecieved));
+    switch (messageRecieved.type) {
+      case "incomingNotification":
+        broadcast(JSON.stringify(messageRecieved));
+        break;
+      case "postNotification":
+        messageRecieved.content = `${messageRecieved.currentUser} changed his name to ${messageRecieved.username}`
+        console.log(messageRecieved)
+        broadcast(JSON.stringify(messageRecieved));
+        break;
+      default:
+    }
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.

@@ -32,12 +32,13 @@ class App extends Component {
       var self = this;
       const currentUser = self.state.currentUser;
       if(currentUser == username){
-        ws.send(JSON.stringify(newMessage));
+        newMessage.type = "incomingNotification";
       }else{
-        newMessage.content = `${currentUser} changed their name to ${username}`
+        newMessage.type = "postNotification";
+        newMessage.currentUser = currentUser;
         self.setState({currentUser: username})
-        ws.send(JSON.stringify(newMessage));
       }
+      ws.send(JSON.stringify(newMessage));
     }
 
   render() {
