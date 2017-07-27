@@ -26,9 +26,9 @@ class App extends Component {
   }
 
 
-    onNewPost(content){
-      console.log(content)
-      const newMessage = {username: this.state.currentUser.name, content: content};
+    onNewPost(username,content){
+      const newMessage = {username: username, content: content};
+      console.log(newMessage)
       ws.send(JSON.stringify(newMessage));
     }
 
