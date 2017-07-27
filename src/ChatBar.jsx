@@ -5,7 +5,7 @@ class ChatBar extends Component {
     super();
 
     this.state = {
-      user: '',
+      user: 'Anonymous',
       content: ''
     }
 
@@ -22,11 +22,9 @@ class ChatBar extends Component {
 
     onUser(event) {
       this.setState({user: event.target.value })
-      // event.target.value = '';
     }
     onContent(event) {
       this.setState({content: event.target.value })
-      // event.target.value = '';
     }
 
   render() {
@@ -34,7 +32,7 @@ class ChatBar extends Component {
       return (
         <footer className="chatbar">
           <input className="chatbar-username" placeholder="Enter username" value={this.state.user} onChange={this.onUser} onKeyUp={this.inputKeyUp}/>
-          <input className="chatbar-message" placeholder="Type a message and hit ENTER" value={this.state.content} onChange={this.onContent} onKeyUp={this.inputKeyUp} />
+          <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={this.onContent} onKeyUp={this.inputKeyUp} />
         </footer>
       );
   }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+const uuidv4 = require('uuid/v4');
 
 const ws = new WebSocket("ws://0.0.0.0:3001/");
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
 
 
     onNewPost(username,content){
-      const newMessage = {username: username, content: content};
+      const newMessage = {id: uuidv4(), username: username, content: content};
       console.log(newMessage)
       ws.send(JSON.stringify(newMessage));
     }
