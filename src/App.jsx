@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     }
 
@@ -29,8 +29,15 @@ class App extends Component {
 
     onNewPost(username,content){
       const newMessage = {id: uuidv4(), username: username, content: content};
-      console.log(newMessage)
-      ws.send(JSON.stringify(newMessage));
+      var self = this;
+      const currentUser = self.state.currentUser;
+      if(currentUser == username){
+        ws.send(JSON.stringify(newMessage));
+      }else{
+        newMessage.content = `${currentUser} changed their name to ${username}`
+        self.setState({currentUser: username})
+        ws.send(JSON.stringify(newMessage));
+      }
     }
 
   render() {
