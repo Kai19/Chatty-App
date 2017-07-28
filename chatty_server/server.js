@@ -25,9 +25,15 @@ function broadcast(data) {
   console.log("data sent to clients!")
 }
 
+function numberOfClients(){
+  let noOfClients = wss.clients.size;
+  broadcast(noOfClients);
+}
+
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  ws.send("Connected to server");
+  numberOfClients();
 
   ws.on('message', function incoming(message){
     let messageRecieved = JSON.parse(message);
@@ -36,14 +42,18 @@ wss.on('connection', (ws) => {
         broadcast(JSON.stringify(messageRecieved));
         break;
       case "postNotification":
-        messageRecieved.content = `${messageRecieved.currentUser} changed his name to ${messageRecieved.username}`
-        console.log(messageRecieved)
+        messageRecieved.content = `${messageRecieved.currentUser} changed his name to ${messageRecieved.username}`;
+        console.log(messageRecieved);
         broadcast(JSON.stringify(messageRecieved));
         break;
       default:
+        throw new Error("Unknown event type " + data.type);
     }
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+    numberOfClients();
+  });
 });
