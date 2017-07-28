@@ -27,7 +27,7 @@ function broadcast(data) {
 
 function numberOfClients(){
   let noOfClients = wss.clients.size;
-  broadcast(noOfClients);
+  broadcast(JSON.stringify({type:"clientCount", number: noOfClients}));
 }
 
 
@@ -41,13 +41,11 @@ wss.on('connection', (ws) => {
       case "incomingNotification":
         broadcast(JSON.stringify(messageRecieved));
         break;
-      case "postNotification":
-        messageRecieved.content = `${messageRecieved.currentUser} changed his name to ${messageRecieved.username}`;
-        console.log(messageRecieved);
+      case "incomingMessage":
         broadcast(JSON.stringify(messageRecieved));
         break;
       default:
-        throw new Error("Unknown event type " + data.type);
+        throw new Error("Unknown event type " + message.type);
     }
   });
 

@@ -12,10 +12,11 @@ class App extends Component {
     this.state = {
       currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
-      clients: 0
+      clientCount: 0,
     }
 
     this.onNewPost = this.onNewPost.bind(this);
+    this.onNewName = this.onNewName.bind(this);
     // this.setState = this.setState.bind(this);
   }
 
@@ -27,41 +28,51 @@ class App extends Component {
     self.socky = ws;
 
     ws.onmessage = function(event) {
-      let messagesRecieved = JSON.parse(event.data);
-      console.log(messagesRecieved)
-      console.log(typeof messagesRecieved)
-      if(typeof messagesRecieved == "number"){
-        self.setState({clients: messagesRecieved})
-        return
+      let messageRecieved = JSON.parse(event.data);
+
+      console.log(messageRecieved);
+
+      switch(messageRecieved.type){
+        case "clientCount":
+          self.setState({clientCount: messageRecieved.number})
+        break
+        case "incomingNotification":
+        case "incomingMessage":
+          let allMessages = self.state.messages.concat(messageRecieved);
+          self.setState({messages: allMessages})
+        break;
       }
-      let allMessages = self.state.messages.concat(messagesRecieved);
-      self.setState({messages: allMessages});
     }
   }
 
-    onNewPost(username,content){
-      const newMessage = {id: uuidv4(), username: username, content: content};
-      const currentUser = this.state.currentUser;
-      if (currentUser == username){
-        newMessage.type = "incomingNotification";
-      } else {
-        newMessage.type = "postNotification";
-        newMessage.currentUser = currentUser;
-        this.setState({currentUser: username})
-      }
-      this.socky.send(JSON.stringify(newMessage));
-    }
+  onNewPost(content){
+    console.log("App.onNewPost", content);
+    const newMessage = {id: uuidv4(), username: this.state.currentUser, content: content};    // TODO: uuid on server-side
+    const currentUser = this.state.currentUser;
+    // TODO: if currentUser is blank, send it with "Anonymous"
+    // if (currentUser == username){
+      newMessage.type = "incomingMessage";
+    // } else {
+    //   newMessage.type = "incomingNotification";
+    // }
+    this.socky.send(JSON.stringify(newMessage));
+  }
+
+  onNewName(username) {
+    console.log("App.onNewName", username);
+    const newMessage = {type: "incomingNotification", oldName: this.state.currentUser, newName: username};
+    this.setState({currentUser: username});
+    this.socky.send(JSON.stringify(newMessage));
+  }
 
 
 
   render() {
-
-
     return (
       <div>
-        <NavBar clients={this.state.clients}/>
-        <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} onNewPost={this.onNewPost}/>
+        <NavBar clientCount={this.state.clientCount}/>
+        <MessageList messages={this.state.messages} type={this.state.type} currentUser={this.state.currentUser}/>
+        <ChatBar currentUser={this.state.currentUser} onNewName={this.onNewName} onNewPost={this.onNewPost}/>
       </div>
     );
   }
