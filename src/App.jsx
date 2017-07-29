@@ -17,7 +17,6 @@ class App extends Component {
 
     this.onNewPost = this.onNewPost.bind(this);
     this.onNewName = this.onNewName.bind(this);
-    // this.setState = this.setState.bind(this);
   }
 
 
@@ -25,7 +24,7 @@ class App extends Component {
     var self = this;
     console.log("componentDidMount <App />");
     const ws = new WebSocket("ws://0.0.0.0:3001/");
-    self.socky = ws;
+    self.socket = ws;
 
     ws.onmessage = function(event) {
       let messageRecieved = JSON.parse(event.data);
@@ -55,14 +54,14 @@ class App extends Component {
     // } else {
     //   newMessage.type = "incomingNotification";
     // }
-    this.socky.send(JSON.stringify(newMessage));
+    this.socket.send(JSON.stringify(newMessage));
   }
 
   onNewName(username) {
     console.log("App.onNewName", username);
     const newMessage = {type: "incomingNotification", oldName: this.state.currentUser, newName: username};
     this.setState({currentUser: username});
-    this.socky.send(JSON.stringify(newMessage));
+    this.socket.send(JSON.stringify(newMessage));
   }
 
 

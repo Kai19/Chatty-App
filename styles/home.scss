@@ -1,5 +1,5 @@
 body {
-     background: white;
+     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
      color: black;
      font-family: 'Open Sans', sans-serif;
      font-size: 14px;
@@ -7,7 +7,7 @@ body {
    }
 
    .chatbar {
-     background: tomato;
+     background-image: linear-gradient(to right, #d7d2cc 0%, #304352 100%);
      border-top: 1px solid black;
      bottom: 0;
      display: flex;
@@ -40,7 +40,7 @@ body {
      padding: 5px;
    }
 
-   .message.system {
+   .message-system {
      font-style: italic;
      padding: 5px 20px;
    }
@@ -62,7 +62,7 @@ body {
    }
 
    .navbar {
-     background: tomato;
+     background-image: linear-gradient(to right, #d7d2cc 0%, #304352 100%);
      border-bottom: 1px solid black;
      height: 60px;
      left: 0;
@@ -76,6 +76,18 @@ body {
      color: inherit;
      display: block;
      float: left;
+     font-weight: 700;
+     font-size: 28px;
+     height: 60px;
+     line-height: 60px;
+     padding: 0 10px;
+     text-decoration: none;
+   }
+
+   .online-users{
+     color: white;
+     display: block;
+     float: right;
      font-weight: 700;
      font-size: 28px;
      height: 60px;

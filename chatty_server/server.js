@@ -39,8 +39,6 @@ wss.on('connection', (ws) => {
     let messageRecieved = JSON.parse(message);
     switch (messageRecieved.type) {
       case "incomingNotification":
-        broadcast(JSON.stringify(messageRecieved));
-        break;
       case "incomingMessage":
         broadcast(JSON.stringify(messageRecieved));
         break;

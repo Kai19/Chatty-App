@@ -6,7 +6,7 @@ class MessageList extends Component {
     super(props);
   }
   render() {
-    console.log("MessageList messages:", this.props.messages.map(m=>JSON.stringify(m)));
+    // console.log("MessageList messages:", this.props.messages.map(m=>JSON.stringify(m)));
     return(
     <main className="messages">
       {
@@ -14,12 +14,8 @@ class MessageList extends Component {
         .filter((m) => m.type === 'incomingMessage' || m.type === 'incomingNotification')
         .map((currentMessage)=>{
           return <Message
-            lazy={currentMessage}
+            message={currentMessage}
             key={currentMessage.id}
-            // username={currentMessage.username}
-            // content={currentMessage.content}
-            // type={currentMessage.type}
-            // currentUser={this.props.currentUser}
           />
         })
       }
