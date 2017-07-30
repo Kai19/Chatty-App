@@ -2,6 +2,7 @@
 
 const express = require('express');
 const SocketServer = require('ws').Server;
+const uuidv4 = require('uuid/v4');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -40,6 +41,7 @@ wss.on('connection', (ws) => {
     switch (messageRecieved.type) {
       case "incomingNotification":
       case "incomingMessage":
+        messageRecieved.id = uuidv4();
         broadcast(JSON.stringify(messageRecieved));
         break;
       default:

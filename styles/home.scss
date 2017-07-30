@@ -1,5 +1,5 @@
 body {
-     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+     background-image: white;
      color: black;
      font-family: 'Open Sans', sans-serif;
      font-size: 14px;
@@ -15,6 +15,8 @@ body {
      padding: 5px;
      position: fixed;
      right: 0;
+     overflow: hidden;
+     z-index: 9999;
    }
 
    .chatbar-message,
@@ -38,11 +40,14 @@ body {
    .message {
      display: flex;
      padding: 5px;
+     overflow: visible;
+     z-index: -1000;
    }
 
    .message-system {
      font-style: italic;
      padding: 5px 20px;
+     z-index: -9999;
    }
 
    .message-content,
@@ -70,6 +75,8 @@ body {
      position: fixed;
      right: 0;
      top: 0;
+     overflow: hidden;
+     z-index: 99999;
    }
 
    .navbar-brand {
@@ -95,3 +102,9 @@ body {
      padding: 0 10px;
      text-decoration: none;
    }
+
+marquee{
+  float:right;
+  width: 230px;
+  height: 1500px;
+}

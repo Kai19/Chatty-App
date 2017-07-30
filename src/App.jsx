@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
-const uuidv4 = require('uuid/v4');
 
 
 class App extends Component {
@@ -18,7 +17,6 @@ class App extends Component {
     this.onNewPost = this.onNewPost.bind(this);
     this.onNewName = this.onNewName.bind(this);
   }
-
 
   componentDidMount() {
     var self = this;
@@ -46,26 +44,24 @@ class App extends Component {
 
   onNewPost(content){
     console.log("App.onNewPost", content);
-    const newMessage = {id: uuidv4(), username: this.state.currentUser, content: content};    // TODO: uuid on server-side
+    const newMessage = {username: this.state.currentUser, content: content};
     const currentUser = this.state.currentUser;
-    // TODO: if currentUser is blank, send it with "Anonymous"
-    // if (currentUser == username){
-      newMessage.type = "incomingMessage";
-    // } else {
-    //   newMessage.type = "incomingNotification";
-    // }
+    newMessage.type = "incomingMessage";
     this.socket.send(JSON.stringify(newMessage));
   }
 
   onNewName(username) {
     console.log("App.onNewName", username);
     const newMessage = {type: "incomingNotification", oldName: this.state.currentUser, newName: username};
-    this.setState({currentUser: username});
+    if(username === ""){
+      newMessage.newName = "Anonymous";
+      this.setState({currentUser: "Anonymous"});
+    }else{
+      this.setState({currentUser: username});
+    }
     this.socket.send(JSON.stringify(newMessage));
   }
-
-
-
+  
   render() {
     return (
       <div>

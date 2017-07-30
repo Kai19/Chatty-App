@@ -5,7 +5,7 @@ class ChatBar extends Component {
     super();
 
     this.state = {
-      user: 'Anonymous',    // TODO: start with empty
+      user: '',
       content: ''
     }
 
@@ -16,13 +16,13 @@ class ChatBar extends Component {
     this.onUserKeyup = this.onUserKeyup.bind(this);
   }
 
-  // TODO: on prop change, refresh this.state.user
 
   onUserChange(event) {
     this.setState({user: event.target.value })
   }
-  onUserBlur(event){        // TODO: use this
+  onUserBlur(event){
     this.props.onNewName(this.state.user);
+    this.setState({user: event.target.value })
   }
   onUserKeyup(event){
     if(event.key === 'Enter'){
@@ -45,7 +45,7 @@ class ChatBar extends Component {
     console.log("Rendering <ChatBar/>");
       return (
         <footer className="chatbar">
-          <input className="chatbar-username" placeholder="Enter username" value={this.state.user} onBlur={this.onBlur} onChange={this.onUserChange} onKeyUp={this.onUserKeyup}/>
+          <input className="chatbar-username" placeholder="Enter username" value={this.state.user} onBlur={this.onUserBlur} onChange={this.onUserChange} onKeyUp={this.onUserKeyup}/>
           <input className="chatbar-message" placeholder="Type a message and hit ENTER" value={this.state.content} onChange={this.onContentChange} onKeyUp={this.onContentKeyup} />
         </footer>
       );
