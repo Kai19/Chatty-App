@@ -6,7 +6,6 @@ class MessageList extends Component {
     super(props);
   }
   render() {
-    // console.log("MessageList messages:", this.props.messages.map(m=>JSON.stringify(m)));
     return(
     <main className="messages">
       {

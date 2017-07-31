@@ -1,15 +1,12 @@
-React Boilerplate
+Chatty-App
 =====================
-
-A minimal and light dev environment for ReactJS.
+A simple messenger that allows multiple users to chat and update their usernames.
 
 ### Usage
 
-Clone the boilerplate and create your own git repo.
-
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
+git clone git@github.com:Kai19/Chatty-App.git
+cd Chatty-App
 git remote rm origin
 git remote add origin [YOUR NEW REPOSITORY]
 # Manually update your package.json file
@@ -22,6 +19,9 @@ npm install
 npm start
 open http://localhost:3000
 ```
+### Screenshot
+
+![Home page](/build/homepage.png)
 
 ### Static Files
 
@@ -31,7 +31,7 @@ For example, if you copy a file called my_image.png into the build folder you ca
 
 ### Linting
 
-This boilerplate project includes React ESLint configuration.
+This project includes React ESLint configuration.
 
 ```
 npm run lint
@@ -43,3 +43,4 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* uuid
