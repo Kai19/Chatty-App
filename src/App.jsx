@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: "", // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       clientCount: 0,
     }
@@ -20,14 +20,11 @@ class App extends Component {
 
   componentDidMount() {
     var self = this;
-    console.log("componentDidMount <App />");
     const ws = new WebSocket("ws://0.0.0.0:3001/");
     self.socket = ws;
 
     ws.onmessage = function(event) {
       let messageRecieved = JSON.parse(event.data);
-
-      console.log(messageRecieved);
 
       switch(messageRecieved.type){
         case "clientCount":
@@ -43,7 +40,6 @@ class App extends Component {
   }
 
   onNewPost(content){
-    console.log("App.onNewPost", content);
     const newMessage = {username: this.state.currentUser, content: content};
     const currentUser = this.state.currentUser;
     newMessage.type = "incomingMessage";
@@ -51,7 +47,6 @@ class App extends Component {
   }
 
   onNewName(username) {
-    console.log("App.onNewName", username);
     const newMessage = {type: "incomingNotification", oldName: this.state.currentUser, newName: username};
     if(username === ""){
       newMessage.newName = "Anonymous";
@@ -61,7 +56,7 @@ class App extends Component {
     }
     this.socket.send(JSON.stringify(newMessage));
   }
-  
+
   render() {
     return (
       <div>

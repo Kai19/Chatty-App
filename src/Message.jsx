@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 class Message extends Component {
   render() {
-    console.log("Rendering <Message/>");
     switch(this.props.message.type){
       case "incomingMessage":
         return (
