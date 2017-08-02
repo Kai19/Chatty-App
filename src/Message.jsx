@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 
+// Class Message renders new message
 class Message extends Component {
   render() {
-    switch(this.props.message.type){
+    switch(this.props.message.type) {
+      // If incomingMessage, render message with username and messsage content
       case "incomingMessage":
         return (
           <div className="message">
@@ -11,6 +13,7 @@ class Message extends Component {
           </div>
         );
       break;
+      // If incomingNotification, will render notification message about username change
       case "incomingNotification":
         return (
           <div className="message-system">
@@ -18,9 +21,11 @@ class Message extends Component {
           </div>
         );
       break;
+      // Should not reach default due to filter in MessageList
+      // But if so returns error and empty div
       default:
-        console.log("Error in message")
-        return (<div></div>)
+        console.log("Error in message");
+        return (<div></div>);
       break;
     }
   }

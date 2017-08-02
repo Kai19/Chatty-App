@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
+// Class ChatBar has event-handling for user inputs
 class ChatBar extends Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
@@ -16,31 +17,38 @@ class ChatBar extends Component {
     this.onUserKeyup = this.onUserKeyup.bind(this);
   }
 
-
+  // Event-handler function for onChange event
   onUserChange(event) {
-    this.setState({user: event.target.value })
+    this.setState({user: event.target.value });
   }
-  onUserBlur(event){
+
+  // Event-handler function for onBlur event
+  onUserBlur(event) {
     this.props.onNewName(this.state.user);
-    this.setState({user: event.target.value })
+    this.setState({user: event.target.value });
   }
-  onUserKeyup(event){
-    if(event.key === 'Enter'){
+
+  // Event-handler function for Enter key-up Charbar-username field
+  onUserKeyup(event) {
+    if(event.key === 'Enter') {
       this.props.onNewName(this.state.user);
     }
   }
 
+  // Event-handler function for onChange event
   onContentChange(event) {
-    this.setState({content: event.target.value })
+    this.setState({content: event.target.value });
   }
+  
+  // Event-handler function for Enter key-up in Charbar-message field
   onContentKeyup(event) {
-    if(event.key === 'Enter'){
+    if(event.key === 'Enter') {
       this.props.onNewPost(this.state.content);
       this.setState({content: ''});
     }
   }
 
-
+  // Renders chat-bar of page
   render() {
       return (
         <footer className="chatbar">
